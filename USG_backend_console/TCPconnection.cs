@@ -17,7 +17,6 @@ namespace USG_backend_console
         TcpClient client;
         NetworkStream ns;
         StreamWriter streamWriter;
-        StreamReader streamReader;
 
         public TCPconnection(String IP, int po)
         {
@@ -27,11 +26,10 @@ namespace USG_backend_console
             connect();
         }
 
-        private void connect()
+        public void connect()
         {
             client.Connect(this.IPaddr, this.port);
             ns = client.GetStream();
-            streamReader = new StreamReader(ns);
             streamWriter = new StreamWriter(ns);
         }
 

@@ -37,17 +37,19 @@ namespace USG_backend_console
                 GlobalSettings.clientSocket = GlobalSettings.serverSocket.AcceptTcpClient();
                 Console.WriteLine("Connected!\r\n");
 
-                NetworkStream stream = GlobalSettings.clientSocket.GetStream();
-                StreamReader reader = new StreamReader(stream);
+                GlobalSettings.stream = GlobalSettings.clientSocket.GetStream();
+                GlobalSettings.reader = new StreamReader(GlobalSettings.stream);
+                GlobalSettings.writer = new StreamWriter(GlobalSettings.stream);
+                GlobalSettings.writer.AutoFlush = true;
                 while (GlobalSettings.clientSocket.Connected)
                 {
                     try {
-                       string currData = reader.ReadLine();
-                       ah.HandleStringCommand(currData, GlobalSettings.clientSocket.Client.RemoteEndPoint.ToString());
+                       string currData = GlobalSettings.reader.ReadLine();
+                       ah.HandleStringCommand(currData);
                     }
                     catch (Exception ex) { 
                         Console.WriteLine("Couldn't process sending/receiving data: " + ex.Message);
-                        stream.Close();
+                        GlobalSettings.stream.Close();
                         GlobalSettings.clientSocket.Close();
                     };
                 }

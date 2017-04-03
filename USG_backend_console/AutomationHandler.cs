@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Input;
+using System.Net;
+using System.Net.Sockets;
 
 namespace USG_backend_console
 {
     class AutomationHandler
     {
         AutomationElement testWindow;
-        TCPconnection conn = null;
 
         public AutomationHandler()
         {
             StartAutomation();
             hideBtnPress();
+            //GlobalSettings.paramConn = new TCPconnection(GlobalSettings.clientSocket.Client.RemoteEndPoint.ToString().Split(':')[0], 12000);
+            //GlobalSettings.paramConn.connect();
         }
 
-        public void HandleStringCommand(string command, string remoteIP)
+        public void HandleStringCommand(string command)
         {
             switch (command.ToLower())
             {
@@ -53,43 +56,28 @@ namespace USG_backend_console
                     saveBtnPress();
                     break;
                 case "8bgr":
-                    Console.WriteLine("Changing palette to 8-bit greyscale");
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit greyscale");
                     paletteChange("8-bit linear grayscale");
                     break;
                 case "ggai":
-                    Console.WriteLine(remoteIP);
-                    conn = new TCPconnection(remoteIP.Split(':')[0],12000);
-                    conn.send(getGain());
-                    conn.disconnect();
-                    Console.WriteLine("Sent gain value to " + remoteIP);
+                    GlobalSettings.writer.WriteLine(getGain());
+                    Console.WriteLine("Sent gain value");
                     break;
                 case "gtxf":
-                    Console.WriteLine(remoteIP);
-                    conn = new TCPconnection(remoteIP.Split(':')[0],12000);
-                    conn.send(getTXfrequency());
-                    conn.disconnect();
-                    Console.WriteLine("Sent tx frequency to " + remoteIP);
+                    GlobalSettings.writer.WriteLine(getTXfrequency());
+                    Console.WriteLine("Sent tx frequency");
                     break;
                 case "gtxt":
-                    Console.WriteLine(remoteIP);
-                    conn = new TCPconnection(remoteIP.Split(':')[0], 12000);
-                    conn.send(getTXtype());
-                    conn.disconnect();
-                    Console.WriteLine("Sent tx type to " + remoteIP);
+                    GlobalSettings.writer.WriteLine(getTXtype());
+                    Console.WriteLine("Sent tx type");
                     break;
                 case "gimr":
-                    Console.WriteLine(remoteIP);
-                    conn = new TCPconnection(remoteIP.Split(':')[0], 12000);
-                    conn.send(getImagingRange());
-                    conn.disconnect();
-                    Console.WriteLine("Sent gain value to " + remoteIP);
+                    GlobalSettings.writer.WriteLine(getImagingRange());
+                    Console.WriteLine("Sent imaging range value");
                     break;
                 case "gfps":
-                    Console.WriteLine(remoteIP);
-                    conn = new TCPconnection(remoteIP.Split(':')[0], 12000);
-                    conn.send(getFramerate());
-                    conn.disconnect();
-                    Console.WriteLine("Sent gain value to " + remoteIP);
+                    GlobalSettings.writer.WriteLine(getFramerate());
+                    Console.WriteLine("Sent framerate");
                     break;
                 default:
                     Console.WriteLine("default switch statement, nothing happened");
