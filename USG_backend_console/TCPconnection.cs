@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using System.IO;
 
 namespace USG_backend_console
 {
@@ -13,34 +14,37 @@ namespace USG_backend_console
 
         private String IPaddr;
         private int port;
-        Socket s = null;
+        TcpClient client;
+        NetworkStream ns;
+        StreamWriter streamWriter;
+        StreamReader streamReader;
 
         public TCPconnection(String IP, int po)
         {
             this.IPaddr = IP;
             this.port = po;
+            client = new TcpClient();
             connect();
         }
 
         private void connect()
         {
-            s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPAddress ipAdd = System.Net.IPAddress.Parse(this.IPaddr);
-            IPEndPoint remoteEP = new IPEndPoint(ipAdd, this.port);
-
-            s.Connect(remoteEP);
+            client.Connect(this.IPaddr, this.port);
+            ns = client.GetStream();
+            streamReader = new StreamReader(ns);
+            streamWriter = new StreamWriter(ns);
         }
 
         public void disconnect()
         {
-            s.Disconnect(true);
-            s.Close();
+            client.GetStream().Close();
+            client.Close();
         }
 
         public void send(String msg)
         {
-            byte[] byData = System.Text.Encoding.ASCII.GetBytes(msg);
-            s.Send(byData);
+            byte[] byteData = System.Text.Encoding.ASCII.GetBytes(msg);
+            streamWriter.Write(byteData);
         }
 
 
