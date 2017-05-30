@@ -71,6 +71,10 @@ namespace USG_backend_console
                     GlobalSettings.writer.WriteLine(getTXtype());
                     Console.WriteLine("Sent tx type");
                     break;
+                case "ggtx":
+                    GlobalSettings.writer.WriteLine(getTXfrequency() + getTXtype());
+                    Console.WriteLine("Sent tx type");
+                    break;
                 case "gimr":
                     GlobalSettings.writer.WriteLine(getImagingRange());
                     Console.WriteLine("Sent imaging range value");
