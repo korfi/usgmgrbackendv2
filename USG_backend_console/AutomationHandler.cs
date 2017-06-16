@@ -147,6 +147,50 @@ namespace USG_backend_console
                     GlobalSettings.writer.WriteLine(getFramerate());
                     Console.WriteLine("Sent framerate");
                     break;
+                case "mkup":
+                    Console.WriteLine("Pressing Marker Up button");
+                    markerUpBtnPress();
+                    break;
+                case "mkdn":
+                    Console.WriteLine("Pressing Marker Down button");
+                    markerDownBtnPress();
+                    break;
+                case "mkle":
+                    Console.WriteLine("Pressing Marker Left button");
+                    markerLeftBtnPress();
+                    break;
+                case "mkri":
+                    Console.WriteLine("Pressing Marker Right button");
+                    markerRightBtnPress();
+                    break;
+                case "mrka":
+                    Console.WriteLine("Pressing Marker A button");
+                    markerABtnPress();
+                    break;
+                case "mrkb":
+                    Console.WriteLine("Pressing Marker B button");
+                    markerBBtnPress();
+                    break;
+                case "mrkc":
+                    Console.WriteLine("Pressing Marker C button");
+                    markerCBtnPress();
+                    break;
+                case "mrkd":
+                    Console.WriteLine("Pressing Marker D button");
+                    markerDBtnPress();
+                    break;
+                case "mrcl":
+                    Console.WriteLine("Pressing Marker Clear button");
+                    clearMarkerBtnPress();
+                    break;
+                case "tabb":
+                    Console.WriteLine("Changing tab to B-Mode");
+                    enterBModeTab();
+                    break;
+                case "tabm":
+                    Console.WriteLine("Changing tab to Measure");
+                    enterMeasureTab();
+                    break;
                 default:
                     Console.WriteLine("default switch statement, nothing happened");
                     break;
@@ -158,6 +202,26 @@ namespace USG_backend_console
             AutomationElement desktopObject = AutomationElement.RootElement;
             System.Windows.Automation.Condition testWindowNameCondition = new PropertyCondition(AutomationElement.NameProperty, "uScan2 GUI");
             this.testWindow = desktopObject.FindFirst(TreeScope.Children, testWindowNameCondition);
+        }
+
+        private void enterBModeTab()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "TabControl_SelectOperationMode");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            textOne.SetFocus();
+            AutomationElement aeTabPage = textOne.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "B-MODE"));
+            SelectionItemPattern valuetextOne = aeTabPage.GetCurrentPattern(SelectionItemPattern.Pattern) as SelectionItemPattern;
+            valuetextOne.Select();
+        }
+
+        private void enterMeasureTab()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "TabControl_SelectOperationMode");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            textOne.SetFocus();
+            AutomationElement aeTabPage = textOne.FindFirst(TreeScope.Descendants, new PropertyCondition(AutomationElement.NameProperty, "MEASURE"));
+            SelectionItemPattern valuetextOne = aeTabPage.GetCurrentPattern(SelectionItemPattern.Pattern) as SelectionItemPattern;
+            valuetextOne.Select();
         }
 
         private void freezeBtnPress()
@@ -195,6 +259,78 @@ namespace USG_backend_console
         private void areaDownBtnPress()
         {
             System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "area_down");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerUpBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerUp_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerDownBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerDown_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerLeftBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerLeft_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerRightBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerRight_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerABtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerA_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerBBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerB_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerCBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerC_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void markerDBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "MarkerD_Button");
+            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+            InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
+            valuetextOne.Invoke();
+        }
+
+        private void clearMarkerBtnPress()
+        {
+            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "ClearMeas_Button");
             AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
             InvokePattern valuetextOne = textOne.GetCurrentPattern(InvokePattern.Pattern) as InvokePattern;
             valuetextOne.Invoke();
@@ -377,6 +513,7 @@ namespace USG_backend_console
             AutomationElement lblOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
             return lblOne.Current.Name;
         }
+
 
         private void paletteChange(String name)
         {
