@@ -119,9 +119,53 @@ namespace USG_backend_console
                     Console.WriteLine("Pressing TCG8 Down");
                     tgc8downBtnPress();
                     break;
-                case "8bgr":
-                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit greyscale");
+                case "8blg":
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit linear greyscale");
                     paletteChange("8-bit linear grayscale");
+                    break;
+                case "8b15":
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit log 1.5f grayscale");
+                    paletteChange("8-bit log 1.5f grayscale");
+                    break;
+                case "8b17":
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit log 1.75f grayscale");
+                    paletteChange("8-bit log 1.75f grayscale");
+                    break;
+                case "8b20":
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit log 2.0f grayscale");
+                    paletteChange("8-bit log 2.0f grayscale");
+                    break;
+                case "8b30":
+                    GlobalSettings.writer.WriteLine("Changing palette to 8-bit log 2.0f grayscale");
+                    paletteChange("8-bit log 3.0f grayscale");
+                    break;
+                case "t125":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to Sine 1 cycle, 25 MHz");
+                    signalChange(" Sine 1 cycle, 25 MHz");
+                    break;
+                case "t425":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to Sine 4 cycles, 25 MHz");
+                    signalChange(" Sine 4 cycles, 25 MHz");
+                    break;
+                case "t625":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to Sine 6 cycles, 25 MHz");
+                    signalChange(" Sine 6 cycles, 25 MHz");
+                    break;
+                case "t162":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to Sine 16 cycles, 25 MHz");
+                    signalChange(" Sine 16 cycles, 25 MHz");
+                    break;
+                case "tb20":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to 13-bit Barker, 20 MHz");
+                    signalChange(" 13-bit Barker, 20 MHz");
+                    break;
+                case "tb35":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to 13-bit Barker, 35 MHz");
+                    signalChange(" 13-bit Barker, 35 MHz");
+                    break;
+                case "chir":
+                    GlobalSettings.writer.WriteLine("Changing TX Signal to 16-bit Chirp, 15-25 MHz");
+                    signalChange(" 16-bit Chirp, 15-25 MHz");
                     break;
                 case "ggai":
                     GlobalSettings.writer.WriteLine(getGain());
@@ -538,15 +582,22 @@ namespace USG_backend_console
 
         private void signalChange(String name)
         {
-            System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "TXcombo");
-            AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
-            ExpandCollapsePattern valuetextOne = textOne.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
-            valuetextOne.Expand();
-            AutomationElement listItem = textOne.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, name));
-            AutomationPattern automationPatternFromElement = GetSpecifiedPattern(listItem, "SelectionItemPatternIdentifiers.Pattern");
-            SelectionItemPattern selectionItemPattern = listItem.GetCurrentPattern(automationPatternFromElement) as SelectionItemPattern;
-            selectionItemPattern.Select();
-            valuetextOne.Collapse();
+            try
+            {
+                System.Windows.Automation.Condition textConditionOne = new PropertyCondition(AutomationElement.AutomationIdProperty, "TXcombo");
+                AutomationElement textOne = testWindow.FindFirst(TreeScope.Descendants, textConditionOne);
+                ExpandCollapsePattern valuetextOne = textOne.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
+                valuetextOne.Expand();
+                AutomationElement listItem = textOne.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.NameProperty, name));
+                AutomationPattern automationPatternFromElement = GetSpecifiedPattern(listItem, "SelectionItemPatternIdentifiers.Pattern");
+                SelectionItemPattern selectionItemPattern = listItem.GetCurrentPattern(automationPatternFromElement) as SelectionItemPattern;
+                selectionItemPattern.Select();
+                valuetextOne.Collapse();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Couldn't change signal to " + name);
+            }
         }
 
         private static AutomationPattern GetSpecifiedPattern(AutomationElement element, string patternName)
